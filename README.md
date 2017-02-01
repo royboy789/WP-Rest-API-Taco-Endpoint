@@ -9,6 +9,9 @@ To give you tacos!
 ┈┈▏┈╲▂▂▂╱┈▕╮▕┈┈  
 ┈┈╲▂▂▂▂▂▂▂▂╲╱┈┈  
 
+## The Response ##
+![taco response](https://github.com/royboy789/WP-Rest-API-Taco-Endpoint/blob/master/taco_response.png?raw=true "Taco WP REST API RESPONSE")
+
 ## To add a taco! ##
 Use the __taco_api_tacos__ filter  
 ```
