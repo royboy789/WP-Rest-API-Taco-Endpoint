@@ -8,6 +8,18 @@
  * Author URI: http://www.roysivan.com
  * Text Domain: tacos
  * License: GPL3
+ *
+ */
+
+/*
+ * For the love of Tacos
+ * ┈┈┈┈╭╯╭╯╭╯┈┈┈┈┈
+ * ┈┈┈╱▔▔▔▔▔╲▔╲┈┈┈
+ * ┈┈╱┈╭╮┈╭╮┈╲╮╲┈┈
+ * ┈┈▏┈▂▂▂▂▂┈▕╮▕┈┈
+ * ┈┈▏┈╲▂▂▂╱┈▕╮▕┈┈
+ * ┈┈╲▂▂▂▂▂▂▂▂╲╱┈┈
+ *
  */
 
 
@@ -34,7 +46,9 @@ class taco_api {
 		return self::$instance;
 	}
 
-
+	/**
+	 * taco_api constructor.
+	 */
 	function __construct() {
 
 		add_action( 'rest_api_init', array( $this, 'taco_api_endpoints' ) );
@@ -42,13 +56,32 @@ class taco_api {
 
 	}
 
+	/**
+	 * Taco API Endpoint & Modified Return Data
+	 */
 	function taco_api_endpoints() {
 		register_rest_route( 'wp/v2', '/tacos', array(
 			'methods' => 'GET',
 			'callback' => array( $this, 'get_tacos_callback' ),
 		) );
+
+		register_rest_field( 'post',
+			'tacos',
+			array(
+				'get_callback'    => array( $this, 'tacos_for_posts' ),
+				'schema'          => null,
+			)
+		);
+
 	}
 
+	/**
+	 * Get Tacos!
+	 *
+	 * @param WP_REST_Request $request
+	 *
+	 * @return WP_REST_Response
+	 */
 	function get_tacos_callback( WP_REST_Request $request ) {
 
 		$tacos = $this->get_tacos();
@@ -60,6 +93,27 @@ class taco_api {
 
 	}
 
+	/**
+	 * Get Tacos! for a post object
+	 *
+	 * @param $object
+	 * @param $field_name
+	 * @param $request
+	 *
+	 * @return array
+	 */
+	function tacos_for_posts( $object, $field_name, $request ) {
+		$data = $request->get_params();
+		if( 'true' === $data['tacos'] ) {
+			return $this->get_tacos();
+		}
+	}
+
+	/**
+	 * Get all the tacos
+	 *
+	 * @return array
+	 */
 	function get_tacos() {
 
 		$taco_data = array(
@@ -73,6 +127,15 @@ class taco_api {
 
 	}
 
+
+	/**
+	 * Add a taco! callback of taco_api_tacos filter
+	 *
+	 * @param $tacos
+	 *
+	 * @return array
+	 *
+	 */
 	function add_tacos( $tacos ) {
 
 		$tacos[] = array(
@@ -93,7 +156,11 @@ class taco_api {
 
 }
 
-
+/**
+ * Init Taco API
+ *
+ * @return taco_api
+ */
 function init_taco_api() {
 	return taco_api::instance();
 }
