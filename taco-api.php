@@ -104,7 +104,7 @@ class taco_api {
 	 */
 	function tacos_for_posts( $object, $field_name, $request ) {
 		$data = $request->get_params();
-		if( 'true' === $data['tacos'] ) {
+		if( isset( $data['tacos'] ) && 'true' === $data['tacos'] ) {
 			return $this->get_tacos();
 		}
 	}
