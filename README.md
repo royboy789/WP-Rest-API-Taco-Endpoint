@@ -1,4 +1,4 @@
-# WordPress REST API Taco Endpoing #
+# WordPress REST API Taco Endpoint #
 Whats the point?  
 To give you tacos!  
 
